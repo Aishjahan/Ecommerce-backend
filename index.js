@@ -7,6 +7,7 @@ const categoriesRouter = require("./routes/Categories");
 const userRouter = require("./routes/User");
 const authRouter = require("./routes/Auth");
 const cartRouter = require("./routes/Cart");
+const orderRouter = require("./routes/Order");
 const cors = require('cors');
 
 server.use(express.json());
@@ -19,6 +20,7 @@ server.use("/categories" , categoriesRouter.router);
 server.use("/users", userRouter.router);
 server.use("/auth", authRouter.router);
 server.use("/cart", cartRouter.router);
+server.use("/orders", orderRouter.router);
 main().catch((err) => console.log(err));
 
 async function main() {

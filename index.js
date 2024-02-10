@@ -19,6 +19,7 @@ const cartRouter = require("./routes/Cart");
 const orderRouter = require("./routes/Order");
 const { User } = require("./model/User");
 const { isAuth, sanitizeUser, cookieExtractor } = require("./services/common");
+const { log } = require("console");
 
 const SECRET_KEY = "SECRET_KEY";
 
@@ -89,7 +90,7 @@ passport.use(
   "jwt",
   new JwtStrategy(opts, async function (jwt_payload, done) {
     try {
-      const user = await User.findOne({ id: jwt_payload.sub });
+      const user = await User.findById( jwt_payload.id );
       if (user) {
         return done(null, sanitizeUser(user));
       } else {
@@ -105,6 +106,7 @@ passport.use(
 
 //this creates session variables req.user on being called from callbacks
 passport.serializeUser(function (user, cb) {
+  console.log('serialize',user);
   process.nextTick(function () {
     return cb(null, { id: user.id, role: user.role });
   });
